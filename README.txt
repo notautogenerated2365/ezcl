@@ -234,3 +234,5 @@ See example.cpp for some of these functions in action.
 By default, CL kernel/program caching is used by transparently storing the kernels and programs in
 unordered_maps associated with each ezcl Device. This can be disabled during compile time by
 defining EZCL_NO_CACHE before including the header.
+
+This library has not been tested in any reasonable capacity.
