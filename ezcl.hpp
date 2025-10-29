@@ -49,7 +49,7 @@ namespace ezcl {
             }
         
         public:
-            DeviceId() {}
+            DeviceId() : _id(nullptr) {}
             DeviceId(cl_device_id i) : _id(i) {}
 
             std::string name() const {
@@ -352,7 +352,6 @@ namespace ezcl {
             Device& operator=(const Device&) = delete;
             Device& operator=(Device&& other) {
                 if (this != &other) {
-                    // Release existing
                     if (queue) clReleaseCommandQueue(queue);
                     if (context) clReleaseContext(context);
 
@@ -364,6 +363,7 @@ namespace ezcl {
                     other.context = nullptr;
                     other.queue = nullptr;
                 }
+
                 return *this;
             }
 

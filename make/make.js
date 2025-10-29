@@ -8,41 +8,6 @@ global.opType = arrays.opType;
 global.numMeta = objects.numMeta;
 global.opMeta = objects.opMeta;
 
-/*
-Pseudocode:
-
-namespace cl {
-    some helper functions
-
-    class cl {
-        private:
-            cl device refs/info
-
-            some more helper functions
-        
-        public:
-            add {
-                num types
-            } sub {
-                num types
-            } mul {
-                num types
-            } div {
-                num types
-            }
-    }
-}
-
-DRY, use lots of helper functions
-have public frontend and private backend functions
-*/
-
-// sample kernel:
-`__kernel void <opName>_<typeName>(__global const <typeName>* a, __global const <typeName>* b, __global <typeName>* c) {
-    int gid = get_global_id(0);
-    c[gid] = a[gid] <opOperator> b[gid];
-}`;
-
 function make(sourcePath) {
     let source = "";
 
@@ -97,7 +62,7 @@ namespace ezcl {
             }
         
         public:
-            DeviceId() {}
+            DeviceId() : _id(nullptr) {}
             DeviceId(cl_device_id i) : _id(i) {}
 
             std::string name() const {
@@ -402,7 +367,6 @@ namespace ezcl {
             Device& operator=(const Device&) = delete;
             Device& operator=(Device&& other) {
                 if (this != &other) {
-                    // Release existing
                     if (queue) clReleaseCommandQueue(queue);
                     if (context) clReleaseContext(context);
 
@@ -414,6 +378,7 @@ namespace ezcl {
                     other.context = nullptr;
                     other.queue = nullptr;
                 }
+
                 return *this;
             }`;
 
